@@ -8,7 +8,7 @@ def call(Map config) {
     pipeline {
         agent none
         stages{
-            stage('Pre-install project'){
+            /*stage('Pre-install project'){
                 agent {
                     node {
                         label "${config.PROJECT_MACHINE_LABEL}"
@@ -27,47 +27,18 @@ def call(Map config) {
                 steps{
                     BeevoUpdateProject( config )
                 }
-            }
-            /*
-            stage('Generate tasks files'){
-                agent {
-                    node {
-                        label '80.172.253.149'
-                    }
-                }
-                steps {
-                    dir("/var/code/"){
-                        sh '''
-                        node generate-task.js -l "${BEEVO_TASKS_FILE}"
-                        '''
-                    }
-                }
-            }
+            }*/
             stage('Run stress test'){
                 agent {
                     node {
-                        label '80.172.253.149'
+                        label "${config.TEST_MACHINE_LABEL}"
                     }
                 }
                 steps {
-                    dir("/var/code/"){
-                        sh '''
-                        TODAY=`date +"%Y%m%d%H%M%S"`
-                        RESULTDIR="/var/log/locust/results/${BEEVO_PROJECT_NAME}/automatedtest/"
-                        mkdir -p "${RESULTDIR}"
-                        
-                        locust -f locust_main.py --no-web -c 30 -r10 -t 120s --print-stats --only-summary --csv="${RESULTDIR}${TODAY}"
-                        '''
-                    }
-                }
-                post { 
-                    failure {
-                        steps {
-                            sh 'date'
-                        }
-                    }
+                    RunLoadTest( config )
                 }
             }
+            /*
             stage('Run acceptance test'){
                 agent {
                     node {
@@ -85,11 +56,11 @@ def call(Map config) {
                     }
                 }
                 steps {
-                    sh '''
+                    sh """
                     /root/re-install/remove.sh \
                         --site $BEEVO_PROJECT_NAME \
                         --envi automatedtest
-                    '''
+                    """
                 }
             }*/
         }
