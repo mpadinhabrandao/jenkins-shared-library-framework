@@ -1,31 +1,124 @@
 def call(Map config) {
     pipeline {
         agent none
-
-/*       
-         parameters {
-            string(name: 'gogo', defaultValue: 'Hello', description: 'How should I greet the world?')
+        stages{
+            stage('Pre-install project'){
+                agent {
+                    node {
+                        label config.PROJECT_MACHINE_LABEL
+                    }
+                }
+                steps {
+                    sh '''
+                        /root/re-install/run.sh \
+                        --proj-name ${config.PROJECT_MACHINE_LABEL} \
+                        --proj-env ${config.BEEVO_PROJECT_ENV} \
+                        --envi automatedtest \
+                        --mysql-db-prefix ${config.BEEVO_PROJECT_BD_PREFIX} \
+                        --mysql-dump-ip ${config.BEEVO_PRODUCTION_IP} \
+                        --mysql-dump-name ${config.BEEVO_PRODUCTION_BDNAME} \
+                        --prod-url ${config.BEEVO_PRODUCTION_URL} 
+                    '''
+                }
+            }
+            /*stage('Install project'){
+                agent {
+                    node {
+                        label '80.172.253.177 (staging V3)'
+                    }
+                }
+                steps{
+                    
+                    dir( "/var/www/html/beevo/$BEEVO_PROJECT_NAME/automatedtest/" ){
+                        git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CREDENTIALSID}", url: "${GIT_URL}"
+                    }
+                    dir( "/var/www/html/beevo/${BEEVO_PROJECT_NAME}/automatedtest/"){
+                        sh '''
+                        #Install project
+                        beevo update-project --repair --no-version --production
+        
+                        chmod -R 777 .
+                        chown -R root:root .
+                        '''
+                    }
+                    
+                }
+            }
+            stage('Generate tasks files'){
+                agent {
+                    node {
+                        label '80.172.253.149'
+                    }
+                }
+                steps {
+                    dir("/var/code/"){
+                        sh '''
+                        node generate-task.js -l "${BEEVO_TASKS_FILE}"
+                        '''
+                    }
+                }
+            }
+            stage('Run stress test'){
+                agent {
+                    node {
+                        label '80.172.253.149'
+                    }
+                }
+                steps {
+                    dir("/var/code/"){
+                        sh '''
+                        TODAY=`date +"%Y%m%d%H%M%S"`
+                        RESULTDIR="/var/log/locust/results/${BEEVO_PROJECT_NAME}/automatedtest/"
+                        mkdir -p "${RESULTDIR}"
+                        
+                        locust -f locust_main.py --no-web -c 30 -r10 -t 120s --print-stats --only-summary --csv="${RESULTDIR}${TODAY}"
+                        '''
+                    }
+                }
+                post { 
+                    failure {
+                        steps {
+                            sh 'date'
+                        }
+                    }
+                }
+            }
+            stage('Run acceptance test'){
+                agent {
+                    node {
+                        label '80.172.253.177 (staging V3)'
+                    }
+                }
+                steps {
+                    sh 'date'
+                }
+            }
+            stage('Remove project'){
+                agent {
+                    node {
+                        label '80.172.253.177 (staging V3)'
+                    }
+                }
+                steps {
+                    sh '''
+                    /root/re-install/remove.sh \
+                        --site $BEEVO_PROJECT_NAME \
+                        --envi automatedtest
+                    '''
+                }
+            }*/
         }
-*/
-
-        environment{
-            GIT_URL="https://bitbucket.org/bsolus_daredevil/delta.git"
-            GIT_BRANCH="production"
-            GIT_CREDENTIALSID="Bitbucket-Carrola-2018"
-            BEEVO_PROJECT_NAME = "delta"
-            BEEVO_PROJECT_ENV = "production"
-            BEEVO_PROJECT_BD_PREFIX = "dlt_"
-            BEEVO_PRODUCTION_IP = "80.172.253.170"
-            BEEVO_PRODUCTION_BDNAME = "deltaq_site"
-            BEEVO_PRODUCTION_URL = "https://pt.mydeltaq.com"
-            BEEVO_TASKS_FILE = "http://automatedtest.${BEEVO_PROJECT_NAME}.env2.bsolus.pt/pt/pt/task/latest/json/seo-manager/Tests/generateLoadTests"
-            
+    }
+/*       
+    pipeline {
+        agent none
+        parameters {
+            string(name: 'gogo', defaultValue: 'Hello', description: 'How should I greet the world?')
         }
         
         stages{
             stage('Pre-install project'){
                 steps {
-                    echo "name is ${config.name}"
                     echo config.BEEVO_PROJECT_NAME
                     echo config.BEEVO_PROJECT_ENV
                     echo config.BEEVO_PROJECT_BD_PREFIX
@@ -66,4 +159,5 @@ def call(Map config) {
             }
         }
     }
+*/
 }
