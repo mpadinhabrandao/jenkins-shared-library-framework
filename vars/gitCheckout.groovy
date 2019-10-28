@@ -2,9 +2,11 @@ def call(String name) {
     pipeline {
         agent none
 
-        parameters {
+/*       
+         parameters {
             string(name: 'gogo', defaultValue: 'Hello', description: 'How should I greet the world?')
         }
+*/
 
         environment{
             GIT_URL="https://bitbucket.org/bsolus_daredevil/delta.git"
