@@ -1,4 +1,25 @@
 def call(Map config) {
+    if (config.BEEVO_PROJECT_NAME == null){
+        error "BEEVO_PROJECT_NAME is null"
+    }
+    if (config.BEEVO_PROJECT_ENV == null){
+        error "BEEVO_PROJECT_ENV is null"
+    }
+    if (config.BEEVO_PROJECT_BD_PREFIX == null){
+        error "BEEVO_PROJECT_BD_PREFIX is null"
+    }
+    if (config.BEEVO_PRODUCTION_IP == null){
+        error "BEEVO_PRODUCTION_IP is null"
+    }
+    if (config.BEEVO_PRODUCTION_BDNAME == null){
+        error "BEEVO_PRODUCTION_BDNAME is null"
+    }
+    if (config.BEEVO_PRODUCTION_URL == null){
+        error "BEEVO_PRODUCTION_URL is null"
+    }
+    if (config.BEEVO_PRODUCTION_URL_TEST == null){
+        error "BEEVO_PRODUCTION_URL_TEST is null"
+    }
     sh """
             /root/re-install/run.sh \
             --proj-name ${config.BEEVO_PROJECT_NAME} \
