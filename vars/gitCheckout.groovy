@@ -9,7 +9,7 @@ def call(Map config) {
                     }
                 }
                 steps {
-                    sh "
+                    sh """
                         /root/re-install/run.sh \
                         --proj-name ${config.BEEVO_PROJECT_NAME} \
                         --proj-env ${config.BEEVO_PROJECT_ENV} \
@@ -18,7 +18,7 @@ def call(Map config) {
                         --mysql-dump-ip ${config.BEEVO_PRODUCTION_IP} \
                         --mysql-dump-name ${config.BEEVO_PRODUCTION_BDNAME} \
                         --prod-url ${config.BEEVO_PRODUCTION_URL} 
-                    "
+                    """
                 }
             }
             /*stage('Install project'){
