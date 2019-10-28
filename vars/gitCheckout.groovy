@@ -19,7 +19,7 @@ def call(Map stageParams) {
         stages{
             stage('Pre-install project'){
                 steps {
-                    println(this.env.FOO)
+                    println(this.env.BEEVO_PROJECT_NAME)
                     echo $BEEVO_PROJECT_NAME
                     echo $BEEVO_PROJECT_ENV
                     echo $BEEVO_PROJECT_BD_PREFIX
