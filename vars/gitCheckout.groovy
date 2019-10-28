@@ -1,4 +1,4 @@
-def call(Map stageParams) {
+def call(String name) {
     pipeline {
         agent none
 
