@@ -3,10 +3,10 @@ def call(Map config) {
         agent none
         stages{
             stage('Pre-install project'){
-                if (config.PROJECT_MACHINE_LABEL == NULL){
+                if ("${config.PROJECT_MACHINE_LABEL}" == NULL){
                     error "PROJECT_MACHINE_LABEL is null"
                 }
-                if (config.TEST_MACHINE_LABEL == NULL){
+                if ("${config.TEST_MACHINE_LABEL}" == NULL){
                     error "TEST_MACHINE_LABEL is null"
                 }
                 agent {
