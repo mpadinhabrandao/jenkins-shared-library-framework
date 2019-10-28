@@ -14,7 +14,7 @@ def call(Map config) {
     
     dir("/var/code/"){
         sh """
-        node generate-task.js -l http://automatedtest.${config.BEEVO_PROJECT_NAME}env2.bsolus.pt"${config.BEEVO_TASKS_FILE}"
+        node generate-task.js -l http://automatedtest.${config.BEEVO_PROJECT_NAME}.env2.bsolus.pt"${config.BEEVO_TASKS_FILE}"
         """
     }
     dir("/var/code/"){
