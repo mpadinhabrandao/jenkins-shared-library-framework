@@ -1,4 +1,4 @@
-def call(String name) {
+def call(Map config) {
     pipeline {
         agent none
 
@@ -25,7 +25,7 @@ def call(String name) {
         stages{
             stage('Pre-install project'){
                 steps {
-                    echo "name is " + this.name
+                    echo "name is ${config.name}"
                     echo this.env.BEEVO_PROJECT_NAME
                     echo this.env.BEEVO_PROJECT_ENV
                     echo this.env.BEEVO_PROJECT_BD_PREFIX
