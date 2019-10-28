@@ -1,8 +1,8 @@
 def call(Map config) {
-    if (config.PROJECT_MACHINE_LABEL == NULL){
+    if (config.PROJECT_MACHINE_LABEL == null){
         error "PROJECT_MACHINE_LABEL is null"
     }
-    if (config.TEST_MACHINE_LABEL == NULL){
+    if (config.TEST_MACHINE_LABEL == null){
         error "TEST_MACHINE_LABEL is null"
     }
     pipeline {
