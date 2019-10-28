@@ -3,6 +3,12 @@ def call(Map config) {
         agent none
         stages{
             stage('Pre-install project'){
+                when {
+                    allOf {
+                        expression { config.PROJECT_MACHINE_LABEL != null }
+                        expression { config.TEST_MACHINE_LABEL != null }
+                    }
+                }
                 agent {
                     node {
                         label "${config.PROJECT_MACHINE_LABEL}"
