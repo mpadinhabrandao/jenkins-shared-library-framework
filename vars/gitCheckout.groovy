@@ -1,6 +1,21 @@
 def call(Map stageParams) {
+    pipeline {
+        environment{
+            GIT_URL="https://bitbucket.org/bsolus_daredevil/delta.git"
+            GIT_BRANCH="production"
+            GIT_CREDENTIALSID="Bitbucket-Carrola-2018"
+            BEEVO_PROJECT_NAME = "delta"
+            BEEVO_PROJECT_ENV = "production"
+            BEEVO_PROJECT_BD_PREFIX = "dlt_"
+            BEEVO_PRODUCTION_IP = "80.172.253.170"
+            BEEVO_PRODUCTION_BDNAME = "deltaq_site"
+            BEEVO_PRODUCTION_URL = "https://pt.mydeltaq.com"
+            BEEVO_TASKS_FILE = "http://automatedtest.${BEEVO_PROJECT_NAME}.env2.bsolus.pt/pt/pt/task/latest/json/seo-manager/Tests/generateLoadTests"
+            
+        }
         stages{
             stage('Pre-install project'){
+                println(this.env.BEEVO_PROJECT_NAME)
                 steps {
                     echo $BEEVO_PROJECT_NAME
                     echo $BEEVO_PROJECT_ENV
@@ -41,5 +56,5 @@ def call(Map stageParams) {
                 }
             }
         }
-    
+    }
 }
