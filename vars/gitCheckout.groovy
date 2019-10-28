@@ -5,7 +5,7 @@ def call(Map config) {
             stage('Pre-install project'){
                 agent {
                     node {
-                        label config.PROJECT_MACHINE_LABEL
+                        label "${config.PROJECT_MACHINE_LABEL}"
                     }
                 }
                 steps {
