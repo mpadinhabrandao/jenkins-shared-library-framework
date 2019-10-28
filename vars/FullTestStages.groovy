@@ -25,20 +25,7 @@ def call(Map config) {
                     }
                 }
                 steps{
-                    
-                    dir( "/var/www/html/beevo/$BEEVO_PROJECT_NAME/automatedtest/" ){
-                        git branch: "${GIT_BRANCH}", credentialsId: "${GIT_CREDENTIALSID}", url: "${GIT_URL}"
-                    }
-                    dir( "/var/www/html/beevo/${BEEVO_PROJECT_NAME}/automatedtest/"){
-                        sh '''
-                        #Install project
-                        beevo update-project --repair --no-version --production
-        
-                        chmod -R 777 .
-                        chown -R root:root .
-                        '''
-                    }
-                    
+                    BeevoUpdateProject( config )
                 }
             }
             /*
