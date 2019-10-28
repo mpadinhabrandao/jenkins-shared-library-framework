@@ -17,9 +17,6 @@ def call(Map config) {
     if (config.BEEVO_PRODUCTION_URL == null){
         error "BEEVO_PRODUCTION_URL is null"
     }
-    if (config.BEEVO_PRODUCTION_URL_TEST == null){
-        error "BEEVO_PRODUCTION_URL_TEST is null"
-    }
     sh """
             /root/re-install/run.sh \
             --proj-name ${config.BEEVO_PROJECT_NAME} \
