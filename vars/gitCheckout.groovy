@@ -25,7 +25,7 @@ def call(String name) {
         stages{
             stage('Pre-install project'){
                 steps {
-                    echo "name is " + name
+                    echo "name is " + this.name
                     echo this.env.BEEVO_PROJECT_NAME
                     echo this.env.BEEVO_PROJECT_ENV
                     echo this.env.BEEVO_PROJECT_BD_PREFIX
