@@ -19,28 +19,27 @@ def call(Map stageParams) {
         stages{
             stage('Pre-install project'){
                 steps {
-                    println(this.env.BEEVO_PROJECT_NAME)
-                    echo $BEEVO_PROJECT_NAME
-                    echo $BEEVO_PROJECT_ENV
-                    echo $BEEVO_PROJECT_BD_PREFIX
-                    echo $BEEVO_PRODUCTION_IP
-                    echo $BEEVO_PRODUCTION_BDNAME
-                    echo $BEEVO_PRODUCTION_URL
-                    echo $BEEVO_PROJECT_NAME
+                    echo this.env.BEEVO_PROJECT_NAME
+                    echo this.env.BEEVO_PROJECT_ENV
+                    echo this.env.BEEVO_PROJECT_BD_PREFIX
+                    echo this.env.BEEVO_PRODUCTION_IP
+                    echo this.env.BEEVO_PRODUCTION_BDNAME
+                    echo this.env.BEEVO_PRODUCTION_URL
+                    echo this.env.BEEVO_PROJECT_NAME
                 }
             }
             stage('Install project'){
                 steps{
-                    echo "/var/www/html/beevo/$BEEVO_PROJECT_NAME/automatedtest/"
-                    echo $GIT_URL
-                    echo $GIT_BRANCH
-                    echo $GIT_CREDENTIALSID
+                    echo "/var/www/html/beevo/"+this.env.BEEVO_PROJECT_NAME+"/automatedtest/"
+                    echo this.env.GIT_URL
+                    echo this.env.GIT_BRANCH
+                    echo this.env.GIT_CREDENTIALSID
                     echo "beevo update-project --repair --no-version --production"
                 }
             }
             stage('Generate tasks files'){
                 steps {
-                    echo "node generate-task.js -l ${BEEVO_TASKS_FILE}"
+                    echo "node generate-task.js -l "+this.env.BEEVO_TASKS_FILE
                 }
             }
             stage('Run stress test'){
@@ -55,7 +54,7 @@ def call(Map stageParams) {
             }
             stage('Remove project'){
                 steps {
-                    echo "/root/re-install/remove.sh --site $BEEVO_PROJECT_NAME --envi automatedtest"
+                    echo "/root/re-install/remove.sh --site "+this.env.BEEVO_PROJECT_NAME+" --envi automatedtest"
                 }
             }
         }
