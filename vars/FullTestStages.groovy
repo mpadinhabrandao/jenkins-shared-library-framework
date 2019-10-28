@@ -39,16 +39,6 @@ def call(Map config) {
                 }
             }
             /*
-            stage('Run acceptance test'){
-                agent {
-                    node {
-                        label '80.172.253.177 (staging V3)'
-                    }
-                }
-                steps {
-                    sh 'date'
-                }
-            }
             stage('Remove project'){
                 agent {
                     node {
