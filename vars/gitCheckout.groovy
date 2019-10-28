@@ -1,5 +1,4 @@
 def call(Map stageParams) {
-    pipeline {
         stages{
             stage('Pre-install project'){
                 steps {
@@ -42,5 +41,5 @@ def call(Map stageParams) {
                 }
             }
         }
-    }
+    
 }
