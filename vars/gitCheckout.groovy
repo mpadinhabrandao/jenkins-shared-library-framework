@@ -1,6 +1,7 @@
 def call(Map stageParams) {
     pipeline {
         agent none
+
         environment{
             GIT_URL="https://bitbucket.org/bsolus_daredevil/delta.git"
             GIT_BRANCH="production"
@@ -14,6 +15,7 @@ def call(Map stageParams) {
             BEEVO_TASKS_FILE = "http://automatedtest.${BEEVO_PROJECT_NAME}.env2.bsolus.pt/pt/pt/task/latest/json/seo-manager/Tests/generateLoadTests"
             
         }
+        
         stages{
             stage('Pre-install project'){
                 steps {
