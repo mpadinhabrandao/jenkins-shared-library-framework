@@ -1,14 +1,14 @@
 def call(Map config) {
+    if (config.PROJECT_MACHINE_LABEL == NULL){
+        error "PROJECT_MACHINE_LABEL is null"
+    }
+    if (config.TEST_MACHINE_LABEL == NULL){
+        error "TEST_MACHINE_LABEL is null"
+    }
     pipeline {
         agent none
         stages{
             stage('Pre-install project'){
-                if ("${config.PROJECT_MACHINE_LABEL}" == NULL){
-                    error "PROJECT_MACHINE_LABEL is null"
-                }
-                if ("${config.TEST_MACHINE_LABEL}" == NULL){
-                    error "TEST_MACHINE_LABEL is null"
-                }
                 agent {
                     node {
                         label "${config.PROJECT_MACHINE_LABEL}"
