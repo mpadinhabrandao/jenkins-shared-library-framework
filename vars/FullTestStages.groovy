@@ -18,10 +18,10 @@ def call(Map config) {
                     Reinstall( config )
                 }
             }
-            /*stage('Install project'){
+            stage('Install project'){
                 agent {
                     node {
-                        label '80.172.253.177 (staging V3)'
+                        label "${config.PROJECT_MACHINE_LABEL}"
                     }
                 }
                 steps{
@@ -41,6 +41,7 @@ def call(Map config) {
                     
                 }
             }
+            /*
             stage('Generate tasks files'){
                 agent {
                     node {
