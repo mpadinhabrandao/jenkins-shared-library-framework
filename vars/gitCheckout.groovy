@@ -1,4 +1,5 @@
 def call(Map stageParams) {
- 
-    echo "hola"
-  }
+    pipeline{
+        echo "hola"
+    }
+}
