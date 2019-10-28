@@ -49,7 +49,7 @@ def call(Map stageParams) {
             }
             stage('Run acceptance test'){
                 steps {
-                    sh 'date'
+                    echo "Run acceptance test"
                 }
             }
             stage('Remove project'){
