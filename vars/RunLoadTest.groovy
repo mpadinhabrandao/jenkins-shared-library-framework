@@ -1,6 +1,6 @@
 def call(Map config) {
-    if (config.BEEVO_TASKS_FILE == null){
-        error "BEEVO_TASKS_FILE is null"
+    if (config.BEEVO_TASKS_LINK == null){
+        error "BEEVO_TASKS_LINK is null"
     }
     if (config.BEEVO_PROJECT_NAME == null){
         error "BEEVO_PROJECT_NAME is null"
@@ -14,7 +14,7 @@ def call(Map config) {
     
     dir("/var/code/"){
         sh """
-        node generate-task.js -l http://automatedtest.${config.BEEVO_PROJECT_NAME}.env2.bsolus.pt"${config.BEEVO_TASKS_FILE}"
+        node generate-task.js -l "${config.BEEVO_TASKS_LINK}"
         """
     }
     dir("/var/code/"){
