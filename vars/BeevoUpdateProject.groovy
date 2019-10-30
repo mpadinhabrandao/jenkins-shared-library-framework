@@ -1,27 +1,12 @@
-def call(Map config) {
-    if (config.BEEVO_PROJECT_NAME == null){
-        error "BEEVO_PROJECT_NAME is null"
+def call(
+    List<String> actions
+) {
+    String cmd_arguments = "" 
+    actions.each {
+        if (!it.startsWith("--")) it = "--" + it
+        cmd_arguments = cmd_arguments + " " + it
     }
-    if (config.GIT_BRANCH == null){
-        error "GIT_BRANCH is null"
-    }
-    if (config.GIT_CREDENTIALSID == null){
-        error "GIT_CREDENTIALSID is null"
-    }
-    if (config.GIT_URL == null){
-        error "GIT_URL is null"
-    }
-    
-    dir( "/var/www/html/beevo/${config.BEEVO_PROJECT_NAME}/automatedtest/" ){
-        git branch: "${config.GIT_BRANCH}", credentialsId: "${config.GIT_CREDENTIALSID}", url: "${config.GIT_URL}"
-    }
-    dir( "/var/www/html/beevo/${config.BEEVO_PROJECT_NAME}/automatedtest/"){
-        sh '''
-        #Install project
-        beevo update-project --repair --no-version --production
-
-        chmod -R 777 .
-        chown -R root:root .
-        '''
-    }
+    sh  """
+        beevo update-project ${cmd_arguments}
+    """
 }
